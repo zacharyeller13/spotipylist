@@ -19,11 +19,9 @@ music_library = pathlib.Path("/media/storage/Music/All Music/")
 # allow us to search based on artist and filter, before selecting
 # the actual tracks
 
-# TODO: change os.listdir to pathlib.iterdir() and change references below
-
 artist_dirs = os.listdir(music_library)
 
-# TODO: Read in list of tracks from spotipy output
+# TODO: #2 Read in list of tracks from spotipy output
 # For now, we will hardcode a dict based on music I know I have
 # for testing
 
@@ -58,16 +56,17 @@ for track in track_info['items']:
     artist = track['track']['artists'][0]['name'] # take the first/primary artist
     if len(track['track']['artists']) > 1: # checking if there are featured artists
         # setting cuttoff of 70, seems to work for the most part right now
-        artist_folders = [dir for dir in artist_dirs if fuzz.partial_ratio(artist, dir) > 70]
+        artist_folders = [dir for dir in artist_dirs if fuzz.partial_ratio(artist, dir.name) > 70]
 
     else:
-        artist_folders = [ar[0] for ar in process.extract(artist, artist_dirs)[0:2]]
+        # index artist_dirs with index provided by the tuple returned from process.extract
+        artist_folders = [artist_dirs[result[2]] for result in process.extract(artist, [dir.name for dir in artist_dirs])]
     print(artist_folders)
 
     # search each matched artist folder for mp3 files, recursively
     # append all found mp3 files to a list mp3_list
-    for artist in artist_folders:
-        for mp3_file in pathlib.Path(f"{music_library}/{artist}").rglob("*.mp3"):
+    for artist_dir in artist_folders:
+        for mp3_file in artist_dir.rglob("*.mp3"):
             mp3_list.append(mp3_file)
     print(mp3_list)
     
@@ -75,4 +74,4 @@ for track in track_info['items']:
     best_match = process.extractOne(track['track']['name'], [mp3.stem for mp3 in mp3_list])
     print(f"Best match:\n {track['track']['name']} | {best_match}")
 
-    # TODO Write the best_match to the playlist file
+    # TODO #3 Write the best_match to the playlist file

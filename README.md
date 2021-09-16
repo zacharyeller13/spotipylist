@@ -15,7 +15,7 @@ This project is my final project for CS50x (Harvard University's Intro to Comput
 
 The main purpose is to make creating playlists from my personal music library faster, easier, and better by using the track lists of many of the fantastic playlists that are already hosted on Spotify.
 
-Video Demo: TODO
+Video Demo: TODO #7
 
 ## Technologies
 Spotipylist uses the following:
@@ -24,10 +24,10 @@ Spotipylist uses the following:
 - rapidfuzz 1.5.0
 
 ## Setup
-TODO
+TODO #5
 
 ## Usage
-TODO
+TODO #6
 
 ## License
 Spotipylist is licensed under the MIT license. 
