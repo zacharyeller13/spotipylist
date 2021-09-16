@@ -19,7 +19,7 @@ music_library = pathlib.Path("/media/storage/Music/All Music/")
 # allow us to search based on artist and filter, before selecting
 # the actual tracks
 
-artist_dirs = os.listdir(music_library)
+artist_dirs = [*music_library.iterdir()]
 
 # TODO: #2 Read in list of tracks from spotipy output
 # For now, we will hardcode a dict based on music I know I have
