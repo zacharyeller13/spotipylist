@@ -1,4 +1,6 @@
+from requests import auth
 import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
 # TODO #8 import playlist_generator
 # and use defined helper functions
@@ -11,5 +13,9 @@ playlist_url = input("""
     Playlist ID: """)
 
 # TODO #12 Get Spotify client credentials from user to authenticate
+# SPOTIPY_CLIENT_ID and SPOTIPY_CLIENT_SECRET need to be set via environment variables
+
+auth_manager = SpotifyClientCredentials()
+spotify = spotipy.Spotify(auth_manager=auth_manager)
 
 # TODO #13 Get playlist_items and necessary fields (name, artists)
