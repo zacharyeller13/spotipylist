@@ -12,7 +12,6 @@ playlist_url = input("""
     https://open.spotify.com/playlist/5t9TUKubTd0bOriqsxq79h -> 5t9TUKubTd0bOriqsxq79h\n
     Playlist ID: """)
 
-# TODO #12 Get Spotify client credentials from user to authenticate
 # SPOTIPY_CLIENT_ID and SPOTIPY_CLIENT_SECRET need to be set via environment variables
 
 auth_manager = SpotifyClientCredentials()
