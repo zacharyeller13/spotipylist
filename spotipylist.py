@@ -17,4 +17,10 @@ playlist_url = input("""
 auth_manager = SpotifyClientCredentials()
 spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-# TODO #13 Get playlist_items and necessary fields (name, artists)
+# Get playlist_items and necessary fields (name, artists)
+
+results = spotify.playlist_items(
+    playlist_url, 
+    market="US", 
+    fields="items(track(name, artists(name)))"
+)
