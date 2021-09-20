@@ -23,4 +23,4 @@ results = spotify.playlist_items(
     playlist_url, 
     market="US", 
     fields="items(track(name, artists(name)))"
-)
+)['items']
