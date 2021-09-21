@@ -1,24 +1,36 @@
 import pathlib
+import os
 
 from rapidfuzz import process
 import rapidfuzz.fuzz as fuzz
 
-
-# Set the location of the music library for searching
-# This can be an absolute reference, we will write the M3U playlist
-# and save it to the music library so that it can have the relative reference
-
-
 # FUTURE ENHANCEMENT? Allow user to select music folder via GUI
 
-music_library = pathlib.Path("/media/storage/Music/All Music/")
+def get_music_library():
+    """Get the user's music library and return the library path object
+    and a list of artist path objects.
+    """
 
-# os.listdir will list all top-level directories in the music library
-# My library is set up with Artist/Album/Track.mp3, so this will
-# allow us to search based on artist and filter, before selecting
-# the actual tracks
+    # Either get the music library from an environment variable OR
+    # allow user to set at runtime
+    music_library = os.environ.get("SPOTIPYLIST_MUSIC_LIBRARY")
+    
+    # if the environment variable is not set, prompt the user
+    if not music_library:
+        print("Music library not set. Please set the SPOTIPYLIST_MUSIC_LIBRARY environment variable before running or input the absolute path of your music library now")
+        music_library = input("Music library absolute path: ")
+    
+    music_library = pathlib.Path(music_library)
+    
+    # pathlib.iterder() will list all top-level directories in the music library
+    # My library is set up with Artist/Album/Track.mp3, so this will
+    # allow us to search based on artist and filter, before selecting
+    # the actual tracks
+    library_artists = [*music_library.iterdir()]
 
-library_artists = [*music_library.iterdir()]
+    return music_library, library_artists
+
+music_library, library_artists = get_music_library()
 
 # TODO: #2 Read in list of tracks from spotipy output
 # For now, we will hardcode a dict based on music I know I have
