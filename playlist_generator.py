@@ -55,6 +55,18 @@ def search_tracks(track, library_artists, music_library):
 
     return mp3_list[best_match[2]].relative_to(music_library)
 
+def write_playlist(track_dict, playlist_name, music_library):
+    """Open a new playlist, write M3U header, write all best matches from search_tracks()
+    """
+    with open(f"{music_library}/{playlist_name}.m3u", 'w') as f:
+        f.write("#EXTM3U\n")
+
+        for track in track_dict:
+            best_match = search_tracks(track, library_artists, music_library)
+
+            f.write(f"{str(best_match)}\n")
+    return
+
 # TODO: #2 Read in list of tracks from spotipy output
 # For now, we will hardcode a dict based on music I know I have
 # for testing
@@ -82,16 +94,9 @@ track_info = {
     ]
 }
 
-music_library, library_artists = get_music_library()
+if __name__ == "__main__":
 
-# Open new playlist file and begin searching and writing matches to file
-playlist_name = input("Name for New Playlist: ")
+    music_library, library_artists = get_music_library()
+    playlist_name = input("Name for New Playlist: ")
 
-with open(f"{music_library}/{playlist_name}.m3u", 'a') as f:
-    f.write("#EXTM3U\n")
-
-    # for each track search and return a best match based on a match ratio of 70 for artists
-    for track in track_info['items']:
-        best_match = search_tracks(track, library_artists, music_library)
-
-        f.write(f"{str(best_match)}\n")
+    write_playlist(track_info['items'], playlist_name, music_library)
