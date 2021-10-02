@@ -89,7 +89,6 @@ def write_playlist(track_dict, playlist_name, music_library, library_artists):
 
     return
 
-# TODO: #2 Read in list of tracks from spotipy output
 # 3 Songs we know we have; 2 songs we know we don't for testing
 
 track_info = {

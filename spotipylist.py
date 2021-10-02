@@ -1,9 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from playlist_generator import get_music_library, search_tracks, write_playlist
 
-# TODO #8 import playlist_generator
-# and use defined helper functions
+from playlist_generator import get_music_library, write_playlist
 
 # take input of playlist URL or playlist_id from user
 playlist_url = input("""
@@ -24,3 +22,10 @@ results = spotify.playlist_items(
     market="US", 
     fields="items(track(name, artists(name)))"
 )['items']
+
+music_library, library_artists = get_music_library()
+
+playlist_name = input("Name for New Playlist \
+(This will overwrite any playlist with the same name): ")
+
+write_playlist(results, playlist_name, music_library, library_artists)

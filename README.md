@@ -21,7 +21,7 @@ Video Demo: TODO #7
 Spotipylist uses the following:
 - Python 3.6 or later
 - spotipy 2.19.0
-- rapidfuzz 1.5.0
+- rapidfuzz 1.7.1
 
 ## Setup
 TODO #5
