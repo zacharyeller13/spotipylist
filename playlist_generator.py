@@ -42,34 +42,52 @@ def search_tracks(track, library_artists, music_library):
 
     else:
         # index library_artists with index provided by tuple returned from process.extract
-        artist_matches = [library_artists[result[2]] for result in process.extract(track_artist, [dir.name for dir in library_artists])]
+        # set cutoff of artist matches to > 70
+        artist_matches = [library_artists[result[2]] for result in process.extract(track_artist, [dir.name for dir in library_artists], score_cutoff=70)]
 
     for artist_dir in artist_matches:
         for mp3_file in artist_dir.rglob("*.mp3"):
             mp3_list.append(mp3_file)
 
-    best_match = process.extractOne(track['track']['name'], [mp3.stem for mp3 in mp3_list])
+    best_match = process.extractOne(track['track']['name'], [mp3.stem for mp3 in mp3_list], score_cutoff=70)
     
-    # Return best_match's relative path to the music_library, taking the index of the best match
-    # in the mp3_list to get the full PosixPath object, allowing use of the .relative_path() method
-
-    return mp3_list[best_match[2]].relative_to(music_library)
+    # If a best_match exists, return best_match's relative path to the music_library, taking the index of the best match
+    # in the mp3_list to get the full PosixPath object, allowing use of the .relative_to() method
+    if best_match:
+        return mp3_list[best_match[2]].relative_to(music_library)
+    else:
+        return
 
 def write_playlist(track_dict, playlist_name, music_library):
-    """Open a new playlist, write M3U header, write all best matches from search_tracks()
+    """Open a new playlist, write M3U header, write all best matches from search_tracks();
+    return non_matches
     """
     with open(f"{music_library}/{playlist_name}.m3u", 'w') as f:
         f.write("#EXTM3U\n")
-
+        non_matches = []
         for track in track_dict:
             best_match = search_tracks(track, library_artists, music_library)
 
-            f.write(f"{str(best_match)}\n")
+            # if a best_match is returned, write it to the playlist file, otherwise
+            # append any non-matched track to list for use below, writing to separate file
+            
+            if best_match:
+                f.write(f"{str(best_match)}\n")
+            else:
+                non_matches.append(track) 
+
+    if non_matches: # if any non-matched tracks, write them to a file missing_tracks.txt and notify user
+        with open(f"{music_library}/missing_tracks.txt", 'w') as f:
+            for non_match in non_matches:
+                line = [non_match['track']['name'], non_match['track']['artists'][0]['name']]
+                f.write(f"{' by '.join(line)}\n")
+
+        print("Some songs from this playlist were not found in your library. See missing_tracks.txt for details.")     
+
     return
 
 # TODO: #2 Read in list of tracks from spotipy output
-# For now, we will hardcode a dict based on music I know I have
-# for testing
+# 3 Songs we know we have; 2 songs we know we don't for testing
 
 track_info = {
     'items': [
@@ -89,6 +107,18 @@ track_info = {
             'track': {
                 'artists': [{'name': 'G-Eazy'}, {'name': 'Bebe Rexha'}],
                 'name': 'Me, Myself & I'
+            }
+        },
+        {
+            'track': {
+                'artists': [{'name': 'Home Grown'}],
+                'name': 'Keep Your Distance'
+            }
+        },
+        {
+            'track': {
+                'artists': [{'name': 'Test-Artist'}, {'name': 'Featured'}],
+                'name': 'Test-Track'
             }
         }
     ]
