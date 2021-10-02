@@ -7,3 +7,6 @@ spotipylist_dev.ipynb
 # workspace settings
 spotipylist.code-workspace
 .vscode/settings.json
+
+# pycache
+__pycache__

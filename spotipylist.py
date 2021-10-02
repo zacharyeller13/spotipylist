@@ -1,6 +1,6 @@
-from requests import auth
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from playlist_generator import get_music_library, search_tracks, write_playlist
 
 # TODO #8 import playlist_generator
 # and use defined helper functions
