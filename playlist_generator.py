@@ -48,8 +48,8 @@ def search_tracks(track, library_artists, music_library):
     for artist_dir in artist_matches:
         for mp3_file in artist_dir.rglob("*.mp3"):
             mp3_list.append(mp3_file)
-    
-    best_match = process.extractOne(track['track']['name'], [mp3.stem for mp3 in mp3_list])
+
+    best_match = process.extractOne(track['track']['name'], [mp3.stem for mp3 in mp3_list], score_cutoff = 70)
     
     # If a best_match exists, return best_match's relative path to the music_library, taking the index of the best match
     # in the mp3_list to get the full PosixPath object, allowing use of the .relative_path() method
