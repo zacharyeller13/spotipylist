@@ -42,14 +42,17 @@ def search_tracks(track, library_artists, music_library):
 
     else:
         # index library_artists with index provided by tuple returned from process.extract
-        # set cutoff of artist matches to > 70
-        artist_matches = [library_artists[result[2]] for result in process.extract(track_artist, [dir.name for dir in library_artists], score_cutoff=70)]
+        # setting cutoff of artist matches to > 86. When it's a single artist, <85.5 seems to
+        # generate more issues with close artists, who may have songs with >70 ratio of similarity to
+        # the song title
+        artist_matches = [library_artists[result[2]] for result in process.extract(track_artist, [dir.name for dir in library_artists], score_cutoff=86)]
 
     for artist_dir in artist_matches:
         for mp3_file in artist_dir.rglob("*.mp3"):
             mp3_list.append(mp3_file)
 
-    best_match = process.extractOne(track['track']['name'], [mp3.stem for mp3 in mp3_list], score_cutoff=70)
+    # remove first 5 chars of filename to remove track numbering (number throws off the matching)
+    best_match = process.extractOne(track['track']['name'], [mp3.stem[4:] for mp3 in mp3_list], score_cutoff=70)
     
     # If a best_match exists, return best_match's relative path to the music_library, taking the index of the best match
     # in the mp3_list to get the full PosixPath object, allowing use of the .relative_to() method
@@ -58,7 +61,7 @@ def search_tracks(track, library_artists, music_library):
     else:
         return
 
-def write_playlist(track_dict, playlist_name, music_library):
+def write_playlist(track_dict, playlist_name, music_library, library_artists):
     """Open a new playlist, write M3U header, write all best matches from search_tracks();
     return non_matches
     """
