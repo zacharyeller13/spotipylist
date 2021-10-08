@@ -46,6 +46,16 @@ TODO #5
 
 2. Run spotipylist in your terminal with `python spotipylist.py`
 
+3. You will be prompted for the Spotify playlist ID you want to copy.
+    - The playlist ID is the last portion of a Spotify Playlist URL:
+        [https://open.spotify.com/playlist/**5t9TUKubTd0bOriqsxq79h**](https://open.spotify.com/playlist/5t9TUKubTd0bOriqsxq79h)
+
+4. When prompted, input the name you would like to give to your new playlist.
+    - New playlist will be saved in your music library as `<playlist_name>.m3u`, overwriting any playlist of the same name.
+
+5. Finally, if your music library does not contain some of the songs in the Spotify playlist, the name and artist of each of those tracks will be saved to `missing_tracks.txt` in your music library.  You'll be prompted with the following message:
+    - `Some songs from this playlist were not found in your library. See missing_tracks.txt for details.`
+
 ## License
 
 Spotipylist is licensed under the MIT license.
