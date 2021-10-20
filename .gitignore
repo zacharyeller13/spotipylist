@@ -10,3 +10,8 @@ spotipylist.code-workspace
 
 # pycache
 __pycache__
+
+# distribution/packaging
+*.egg-info/
+build/
+dist/
