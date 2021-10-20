@@ -30,7 +30,17 @@ Spotipylist uses the following:
 
 ## Setup
 
-TODO #5
+Spotipylist is easily installable using `pip`:
+
+```
+pip install spotipylist
+```
+
+OR
+
+```
+python3 -m pip install spotipylist
+```
 
 ## Usage
 
@@ -44,7 +54,11 @@ TODO #5
 
     Set SPOTIPYLIST_MUSIC_LIBRARY with the absolute path to your local music library.
 
-2. Run spotipylist in your terminal with `python spotipylist.py`
+2. Because you installed from PyPi, you can run spotipylist in your terminal with
+
+```
+spotipylist
+```
 
 3. You will be prompted for the Spotify playlist ID you want to copy.
     - The playlist ID is the last portion of a Spotify Playlist URL:
