@@ -18,7 +18,7 @@ This project is my final project for CS50x (Harvard University's Intro to Comput
 
 The main purpose is to make creating playlists from my personal music library faster, easier, and better by using the track lists of many of the fantastic playlists that are already hosted on Spotify.
 
-Video Demo: TODO #7
+Video Demo: <https://youtu.be/hiCw-1UxLPs>
 
 ## Dependencies
 
