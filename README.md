@@ -20,7 +20,7 @@ The main purpose is to make creating playlists from my personal music library fa
 
 Video Demo: TODO #7
 
-## Technologies
+## Dependencies
 
 Spotipylist uses the following:
 
@@ -30,17 +30,35 @@ Spotipylist uses the following:
 
 ## Setup
 
-Spotipylist is easily installable using `pip`:
+Spotipylist is installable using `pip`:
 
-```
+```bash
 pip install spotipylist
 ```
 
 OR
 
-```
+```bash
 python3 -m pip install spotipylist
 ```
+
+Currently, your music library must be arranged the in the following format:
+
+- Folder structure:
+
+    ```bash
+    <music_library>/<artist>/[<album>/]
+    ```
+
+- Filenames
+
+    ```bash
+    <track_number> - <track_name>.mp3
+    ```
+
+    where track_number is 2 digits (e.g. 01 for track number 1)
+
+This is mostly a personal choice as that's how my music library is structured.  I have considered other options, such as adding support for ID3 tags, and probably will add one or more in future releases.
 
 ## Usage
 
@@ -56,9 +74,9 @@ python3 -m pip install spotipylist
 
 2. Because you installed from PyPi, you can run spotipylist in your terminal with
 
-```
-spotipylist
-```
+    ```bash
+    spotipylist
+    ```
 
 3. You will be prompted for the Spotify playlist ID you want to copy.
     - The playlist ID is the last portion of a Spotify Playlist URL:
