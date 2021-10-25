@@ -7,7 +7,7 @@ A playlist generator for creating local playlists using Spotify's curated playli
 ## Table of Contents
 
 - [General Info](#General-Info)
-- [Technologies](#Technologies)
+- [Dependencies](#Dependencies)
 - [Setup](#Setup)
 - [Usage](#Usage)
 - [License](#License)
