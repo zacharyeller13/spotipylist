@@ -19,8 +19,8 @@ def spotipylist():
     # Get playlist_items and necessary fields (name, artists)
 
     results = spotify.playlist_items(
-    playlist_url, 
-    market="US", 
+    playlist_url,
+    market="US",
     fields="items(track(name, artists(name)))"
     )['items']
 
