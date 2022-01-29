@@ -30,11 +30,12 @@ def spotipylist():
         results = spotify.next(results)
         tracks.extend(results['items'])
 
-    print(len(tracks))
-
     music_library, library_artists = get_music_library()
 
     playlist_name = input("Name for New Playlist \
     (This will overwrite any playlist with the same name): ")
 
     write_playlist(tracks, playlist_name, music_library, library_artists)
+
+if __name__ == "__main__":
+    spotipylist()
