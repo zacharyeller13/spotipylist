@@ -73,13 +73,13 @@ def write_playlist(track_dict, playlist_name, music_library, library_artists):
 
             # if a best_match is returned, write it to the playlist file, otherwise
             # append any non-matched track to list for use below, writing to separate file
-            
+
             if best_match:
                 f.write(f"{str(best_match)}\n")
             else:
                 non_matches.append(track) 
 
-    if non_matches: # if any non-matched tracks, write them to a file missing_tracks.txt and notify user
+    if non_matches: # if any non-matched tracks, write to missing_tracks.txt and notify user
         with open(f"{music_library}/missing_tracks.txt", 'w') as f:
             for non_match in non_matches:
                 line = [non_match['track']['name'], non_match['track']['artists'][0]['name']]
