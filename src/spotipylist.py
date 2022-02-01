@@ -16,17 +16,26 @@ def spotipylist():
     auth_manager = SpotifyClientCredentials()
     spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-    # Get playlist_items and necessary fields (name, artists)
+    # Get playlist_items, extend results if is a paginated result
+    # exclude unnecessary fields
 
     results = spotify.playlist_items(
-    playlist_url, 
-    market="US", 
-    fields="items(track(name, artists(name)))"
-    )['items']
+        playlist_url,
+        market="US"
+    )
+
+    tracks = results['items']
+
+    while results['next']:
+        results = spotify.next(results)
+        tracks.extend(results['items'])
 
     music_library, library_artists = get_music_library()
 
     playlist_name = input("Name for New Playlist \
     (This will overwrite any playlist with the same name): ")
 
-    write_playlist(results, playlist_name, music_library, library_artists)
+    write_playlist(tracks, playlist_name, music_library, library_artists)
+
+if __name__ == "__main__":
+    spotipylist()

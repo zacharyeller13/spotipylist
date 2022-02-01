@@ -2,8 +2,6 @@
 
 A playlist generator for creating local playlists using Spotify's curated playlists
 
-**Currently under active development.**
-
 ## Table of Contents
 
 - [General Info](#General-Info)
@@ -91,5 +89,3 @@ This is mostly a personal choice as that's how my music library is structured.  
 ## License
 
 Spotipylist is licensed under the MIT license.
-
-This is one reason for using the rapidfuzz library over fuzzywuzzy as fuzzywuzzy is licensed under GPL-2.0, which would require Spotipylist to adopt GPL-2.0 as well.
