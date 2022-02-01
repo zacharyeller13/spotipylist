@@ -1,7 +1,8 @@
+# pylint: disable=not-callable
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-from utils.playlist_generator import get_music_library, write_playlist
+from src.utils.playlist_generator import get_music_library, write_playlist
 
 def spotipylist():
     # take input of playlist URL or playlist_id from user
