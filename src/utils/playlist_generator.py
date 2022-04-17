@@ -65,7 +65,7 @@ def write_playlist(track_dict, playlist_name, music_library, library_artists):
     """Open a new playlist, write M3U header, write all best matches from search_tracks();
     return non_matches
     """
-    with open(f"{music_library}/{playlist_name}.m3u", 'w') as f:
+    with open(f"{music_library}/{playlist_name}.m3u", 'w', encoding="UTF-8") as f:
         f.write("#EXTM3U\n")
         non_matches = []
         for track in track_dict:
@@ -80,7 +80,7 @@ def write_playlist(track_dict, playlist_name, music_library, library_artists):
                 non_matches.append(track) 
 
     if non_matches: # if any non-matched tracks, write to missing_tracks.txt and notify user
-        with open(f"{music_library}/missing_tracks.txt", 'w') as f:
+        with open(f"{music_library}/missing_tracks.txt", 'w', encoding="UTF-8") as f:
             for non_match in non_matches:
                 line = [non_match['track']['name'], non_match['track']['artists'][0]['name']]
                 f.write(f"{' by '.join(line)}\n")
