@@ -7,7 +7,7 @@ from playlist import Playlist, Song
 
 # FUTURE ENHANCEMENT? Allow user to select music folder via GUI
 
-def get_music_library():
+def get_music_library() -> tuple[pathlib.Path, list[pathlib.Path]]:
     """Get the user's music library and return the library path object
     and a list of artist path objects.
     """
