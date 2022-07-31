@@ -3,6 +3,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
 from src.utils.playlist_generator import get_music_library, write_playlist
+from src.utils.playlist import Playlist, Song
 
 def spotipylist():
     # take input of playlist URL or playlist_id from user
