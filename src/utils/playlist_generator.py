@@ -7,7 +7,7 @@ from src.utils.playlist import Playlist, Song
 
 # FUTURE ENHANCEMENT? Allow user to select music folder via GUI
 
-def get_music_library() -> tuple[pathlib.Path, list[pathlib.Path]]:
+def get_music_library():
     """Get the user's music library and return the library path object
     and a list of artist path objects.
     """
@@ -31,13 +31,13 @@ def get_music_library() -> tuple[pathlib.Path, list[pathlib.Path]]:
 
     return music_library, library_artists
 
-def search_tracks(track: Song, library_artists: list[pathlib.Path], music_library: pathlib.Path):
+def search_tracks(track, library_artists, music_library):
     """Read in track info and list of library artists;
     search for matching tracks and return a best match    
     """
     mp3_list=[]
-    track_artist = track.artists[0] # take first/primary artist
-    if len(track.artists) > 1: # if there are featured artists
+    track_artist = track['track']['artists'][0]['name'] # take first/primary artist
+    if len(track['track']['artists']) > 1: # if there are featured artists
         # setting cutoff of 70, seems to match pretty well for now
         artist_matches = [dir for dir in library_artists if fuzz.partial_ratio(track_artist, dir.name) > 70]
 
@@ -53,7 +53,7 @@ def search_tracks(track: Song, library_artists: list[pathlib.Path], music_librar
             mp3_list.append(mp3_file)
 
     # remove first 5 chars of filename to remove track numbering (number throws off the matching)
-    best_match = process.extractOne(track.name, [mp3.stem[4:] for mp3 in mp3_list], score_cutoff=70)
+    best_match = process.extractOne(track['track']['name'], [mp3.stem[4:] for mp3 in mp3_list], score_cutoff=70)
     
     # If a best_match exists, return best_match's relative path to the music_library, taking the index of the best match
     # in the mp3_list to get the full PosixPath object, allowing use of the .relative_to() method
@@ -62,14 +62,14 @@ def search_tracks(track: Song, library_artists: list[pathlib.Path], music_librar
     else:
         return
 
-def write_playlist(playlist: Playlist, music_library: pathlib.Path, library_artists: list[pathlib.Path]) -> None:
+def write_playlist(track_dict, playlist_name, music_library, library_artists):
     """Open a new playlist, write M3U header, write all best matches from search_tracks();
     return non_matches
     """
-    with open(f"{music_library}/{playlist.name}.m3u", 'w', encoding="UTF-8") as f:
+    with open(f"{music_library}/{playlist_name}.m3u", 'w', encoding="UTF-8") as f:
         f.write("#EXTM3U\n")
         non_matches = []
-        for track in playlist.tracks:
+        for track in track_dict:
             best_match = search_tracks(track, library_artists, music_library)
 
             # if a best_match is returned, write it to the playlist file, otherwise
@@ -78,12 +78,12 @@ def write_playlist(playlist: Playlist, music_library: pathlib.Path, library_arti
             if best_match:
                 f.write(f"{str(best_match)}\n")
             else:
-                non_matches.append(track)
+                non_matches.append(track) 
 
     if non_matches: # if any non-matched tracks, write to missing_tracks.txt and notify user
         with open(f"{music_library}/missing_tracks.txt", 'w', encoding="UTF-8") as f:
             for non_match in non_matches:
-                line = [non_match.name, non_match.artists[0]]
+                line = [non_match['track']['name'], non_match['track']['artists'][0]['name']]
                 f.write(f"{' by '.join(line)}\n")
 
         print("Some songs from this playlist were not found in your library. See missing_tracks.txt for details.")     
