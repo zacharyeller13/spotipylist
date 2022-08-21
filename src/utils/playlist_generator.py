@@ -3,7 +3,7 @@ import os
 
 from rapidfuzz import process
 import rapidfuzz.fuzz as fuzz
-from playlist import Playlist, Song
+from src.utils.playlist import Playlist, Song
 
 # FUTURE ENHANCEMENT? Allow user to select music folder via GUI
 
