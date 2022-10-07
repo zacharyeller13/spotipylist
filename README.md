@@ -23,8 +23,8 @@ Video Demo: <https://youtu.be/hiCw-1UxLPs>
 Spotipylist uses the following:
 
 - Python 3.6 or later
-- spotipy 2.19.0
-- rapidfuzz 1.7.1
+- spotipy 2.19.0 or later
+- rapidfuzz 1.7.1 or later
 
 ## Setup
 
