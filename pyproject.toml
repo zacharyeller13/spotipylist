@@ -1,6 +1,19 @@
+[tool.poetry]
+name = "spotipylist"
+version = "0.2.1"
+description = "A playlist generator for creating local playlists using Spotify curated playlists"
+authors = ["Zachary Eller <37415056+zacharyeller13@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+spotipy = "^2.19.0"
+rapidfuzz = "^1.7.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.1"
+
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
