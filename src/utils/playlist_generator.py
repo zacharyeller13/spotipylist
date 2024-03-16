@@ -1,5 +1,5 @@
-import pathlib
 import os
+from pathlib import Path
 
 from rapidfuzz import process
 import rapidfuzz.fuzz as fuzz
@@ -7,7 +7,7 @@ from src.utils.playlist import Playlist, Song
 
 # FUTURE ENHANCEMENT? Allow user to select music folder via GUI
 
-def get_music_library() -> tuple[pathlib.Path, list[pathlib.Path]]:
+def get_music_library() -> tuple[Path, list[Path]]:
     """Get the user's music library and return the library path object
     and a list of artist path objects.
     """
@@ -21,7 +21,7 @@ def get_music_library() -> tuple[pathlib.Path, list[pathlib.Path]]:
         print("Music library not set. Please set the SPOTIPYLIST_MUSIC_LIBRARY environment variable before running or input the absolute path of your music library now")
         music_library = input("Music library absolute path: ")
     
-    music_library = pathlib.Path(music_library)
+    music_library = Path(music_library)
     
     # pathlib.iterder() will list all top-level directories in the music library
     # My library is set up with Artist/Album/Track.mp3, so this will
@@ -31,7 +31,7 @@ def get_music_library() -> tuple[pathlib.Path, list[pathlib.Path]]:
 
     return music_library, library_artists
 
-def search_tracks(track: Song, library_artists: list[pathlib.Path], music_library: pathlib.Path):
+def search_tracks(track: Song, library_artists: list[Path], music_library: Path):
     """Read in track info and list of library artists;
     search for matching tracks and return a best match    
     """
@@ -62,7 +62,7 @@ def search_tracks(track: Song, library_artists: list[pathlib.Path], music_librar
     else:
         return
 
-def write_playlist(playlist: Playlist, music_library: pathlib.Path, library_artists: list[pathlib.Path]) -> None:
+def write_playlist(playlist: Playlist, music_library: Path, library_artists: list[Path]) -> None:
     """Open a new playlist, write M3U header, write all best matches from search_tracks();
     return non_matches
     """
@@ -90,46 +90,3 @@ def write_playlist(playlist: Playlist, music_library: pathlib.Path, library_arti
 
     return
 
-# 3 Songs we know we have; 2 songs we know we don't for testing
-
-track_info = {
-    'items': [
-        {
-            'track': {
-                'artists': [{'name': 'Phantom Planet'}],
-                'name': 'California - Tchad Blake Mix'
-            }
-        },
-        {
-            'track': {
-                'artists': [{'name': 'blink-182'}],
-                'name': 'First Date'
-            }
-        },
-        {
-            'track': {
-                'artists': [{'name': 'G-Eazy'}, {'name': 'Bebe Rexha'}],
-                'name': 'Me, Myself & I'
-            }
-        },
-        {
-            'track': {
-                'artists': [{'name': 'Home Grown'}],
-                'name': 'Keep Your Distance'
-            }
-        },
-        {
-            'track': {
-                'artists': [{'name': 'Test-Artist'}, {'name': 'Featured'}],
-                'name': 'Test-Track'
-            }
-        }
-    ]
-}
-
-if __name__ == "__main__":
-
-    music_library, library_artists = get_music_library()
-    playlist_name = input("Name for New Playlist: ")
-
-    write_playlist(track_info['items'], playlist_name, music_library)
